@@ -17,11 +17,13 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/whoami", function (req, res) {
+  let ip = req.headers['x-forwarded-for'];
+  
   res.json({
-"ipaddress": "8.40.35.10",
-"language": "en-US",
-"software": "Windows NT 10.0; Win64; x64"
-});
+    "ipaddress": ip.split(',', 1),
+    "language": req.headers['accept-language'].split(',', 1),
+    "software": req.headers['user-agent']
+  });
 });
 
 // listen for requests :)
